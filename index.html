@@ -12,7 +12,6 @@
             --sf-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
         }
 
-        /* Дэлгэцийн хөдөлгөөнийг хаах */
         * {
             -webkit-user-select: none;
             user-select: none;
@@ -32,7 +31,7 @@
 
         body { display: flex; justify-content: center; align-items: center; }
 
-        /* Зургууд */
+        /* Зургууд - Захиаг дарахгүй байхаар байрлуулсан */
         .photo-scatter-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1;
@@ -42,43 +41,44 @@
             position: absolute; 
             object-fit: cover; 
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: none;
         }
 
-        /* Захианы хэсэг - Зайг маш сайн тохируулсан */
+        /* Захианы хэсэг - Шинэ текстээр баяжуулсан */
         .wrapper {
             position: relative; z-index: 10;
-            width: 92%; max-width: 330px;
+            width: 90%; max-width: 340px;
             padding: 15px;
             opacity: 0; transform: scale(0.98);
             animation: iosEntry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
         h1 { 
-            font-size: 28px; font-weight: 700; margin: 0 0 8px 0; 
+            font-size: 28px; font-weight: 700; margin: 0 0 10px 0; 
             letter-spacing: -1px; color: #000;
             text-shadow: 0 0 15px white, 0 0 5px white;
         }
         
         .content { 
-            font-size: 14.5px; /* Захиаг бүрэн багтаахын тулд фонтыг 14.5px болгов */
-            line-height: 1.4; color: #000; 
+            font-size: 14px; /* Текст бүрэн багтахаар тохируулав */
+            line-height: 1.45; color: #000; 
             text-align: justify; margin-bottom: 20px; font-weight: 500;
             text-shadow: 0 0 15px white, 0 0 10px white, 0 0 5px white;
         }
 
         .question { 
             display: block; font-size: 16px; font-weight: 700; 
-            margin-bottom: 20px; color: var(--ios-red); text-align: center;
+            margin-bottom: 25px; color: var(--ios-red); text-align: center;
         }
 
-        /* iOS Button */
+        /* iOS Button Style */
         .action-button {
             display: block; background-color: #000;
-            color: #ffffff; text-align: center; padding: 15px;
+            color: #ffffff; text-align: center; padding: 16px;
             border-radius: 14px; font-size: 16px; font-weight: 600;
             width: 100%; border: none; cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
 
         /* Modal */
@@ -90,13 +90,13 @@
         }
 
         .modal-content {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             width: 270px; border-radius: 14px;
             overflow: hidden; 
             animation: iosAlertPop 0.3s cubic-bezier(0.2, 1, 0.2, 1);
         }
 
-        .modal-text { font-size: 17px; font-weight: 600; padding: 22px 16px; text-align: center; }
+        .modal-text { font-size: 17px; font-weight: 600; padding: 22px 16px; text-align: center; color: #000; }
         .modal-button {
             display: block; width: 100%; padding: 14px 0;
             border-top: 0.5px solid rgba(0, 0, 0, 0.1); 
@@ -111,29 +111,29 @@
 <body oncontextmenu="return false;">
 
     <div class="photo-scatter-container">
-        <img class="scatter-img" style="top: -2%; left: -8%; width: 170px; height: 170px; transform: rotate(-8deg);" src="1.jpg">
-        <img class="scatter-img" style="top: 8%; right: -5%; width: 130px; height: 130px; transform: rotate(12deg);" src="2.jpg">
-        <img class="scatter-img" style="bottom: 12%; left: -10%; width: 160px; height: 160px; transform: rotate(10deg);" src="3.jpg">
-        <img class="scatter-img" style="bottom: -5%; right: -5%; width: 180px; height: 180px; transform: rotate(-5deg);" src="4.jpg">
-        <img class="scatter-img" style="top: 45%; left: 40%; width: 110px; height: 110px; transform: rotate(6deg);" src="5.jpg">
+        <img class="scatter-img" style="top: -2%; left: -5%; width: 160px; height: 160px; transform: rotate(-8deg);" src="1.jpg">
+        <img class="scatter-img" style="top: 10%; right: -5%; width: 130px; height: 130px; transform: rotate(12deg);" src="2.jpg">
+        <img class="scatter-img" style="bottom: 12%; left: -8%; width: 155px; height: 155px; transform: rotate(10deg);" src="3.jpg">
+        <img class="scatter-img" style="bottom: -2%; right: -3%; width: 170px; height: 170px; transform: rotate(-5deg);" src="4.jpg">
+        <img class="scatter-img" style="top: 45%; left: 42%; width: 100px; height: 100px; transform: rotate(5deg);" src="5.jpg">
     </div>
 
     <div class="wrapper">
-        <h1>Сайн уу, Энхжин?</h1>
+        <h1>Сайн уу? Энхжин</h1>
         <div class="content">
-            Чамайг анх хараад би өөрийн эрхгүй анхаарлаа салгаж чадалгүй зогсоод чиний хоолойг сонсоод яагаад ингэж сэтгэлд минь хүрээд байгааг ойлгохыг хүссэн. Тэр үед чи инээхдээ их хөөрхөн харагдсан тэрнээс хойш чиний инээмсэглэл их дур булаам болохоор холоос ч харахад надад сайхан мэдрэмж төрдөг. 
+            Чамайг анх хараад би өөрийн эрхгүй анхаарлаа салгаж чадалгүй зогссон, тэгээд чиний хоолойг сонсоод яагаад ингэж сэтгэлд минь хүрээд байгааг мэдэхийг хүссэн юм. Тэр үед чи инээхдээ их хөөрхөн харагдсан, тэрнээс хойш чиний инээмсэглэл их дур булаам болохоор холоос ч харахад надад сайхан мэдрэмж өгдөг. 
             <br><br>
-            Энхжин, бид саяхан л танилцсан ч чамтай байхад надад тайван, дахиад жоохон хамт байхыг хүсдэг болчихсон байна. Би их дуугүй, мэдрэмжээ амархан илэрхийлж чаддаггүй хүн. Гэхдээ өөрийгөө нээх хэрэгтэй гэдгээ ойлгосон болохоор энэ захиаг бичиж байна.
+            Бид саяхан л танилцсан ч чамтай хамт байхад надад тайван санагддаг. Би их дуугүй, мэдрэмжээ амархан илэрхийлж чаддаггүй хүн. Гэхдээ тэглээ гээд зүгээр суугаад чамайг алдвал харамсаж ч чадахгүй болохоор энэ захиаг бичиж байна. 
             <br><br>
-            Магадгүй чамд өөр хүн байж ч болохыг ойлгож байна гэхдээ би чамд татагдаж, чамайг илүү мэдэхийг хүсэж байгаагаа шударгаар хэлэхийг хүссэн юм.
+            Магадгүй чи өөр хүнтэй байж болохыг ойлгож байгаа ч зүгээр л би чамд татагдаж, чамайг илүү таньж мэдэхийг хүсэж байгаагаа шударгаар хэлэхийг хүссэн юм.
         </div>
-        <span class="question">Энхжин, чи миний Valentine болох уу?</span>
+        <span class="question">Чи миний Valentine болооч? </span>
         <button onclick="showModal()" class="action-button">Хариу бичих</button>
     </div>
 
     <div id="modalOverlay">
         <div class="modal-content">
-            <div class="modal-text">Энхжин, чи зөвшөөрч байна уу? </div>
+            <div class="modal-text">Би чамайг зөвшөөрөхийг хүсэж байна... </div>
             <button class="modal-button" onclick="goToInstagram()">Тийм ээ</button>
         </div>
     </div>
