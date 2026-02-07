@@ -12,7 +12,7 @@
             --sf-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
         }
 
-        /* Бүх хөдөлгөөнийг бүрэн хаах */
+        /* Дэлгэцийн бүх хөдөлгөөн болон scroll-ыг үндсээр нь хаах */
         * {
             -webkit-user-select: none;
             user-select: none;
@@ -20,22 +20,23 @@
             -webkit-tap-highlight-color: transparent;
             box-sizing: border-box;
             touch-action: none; 
+            overflow: hidden; /* Бүх элемент дээр scroll хаана */
         }
 
         html, body {
             height: 100%; width: 100%; margin: 0; padding: 0;
             background-color: var(--ios-bg);
             font-family: var(--sf-font);
-            overflow: hidden; /* Дээш доош хөдөлгөөнийг хаана */
             position: fixed;
+            top: 0; left: 0;
         }
 
         body { display: flex; justify-content: center; align-items: center; }
 
-        /* Зургууд - Төрөл бүрийн хэмжээтэй, хүрээгүй */
+        /* Зургууд - Янз бүрийн хэмжээтэй */
         .photo-scatter-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; overflow: hidden;
+            z-index: 1;
         }
 
         .scatter-img {
@@ -46,30 +47,34 @@
             border: none;
         }
 
-        /* Захианы хэсэг */
+        /* Захианы хэсэг - Огт scroll-гүй */
         .wrapper {
             position: relative; z-index: 10;
             width: 90%; max-width: 340px;
-            padding: 20px;
+            padding: 10px;
             opacity: 0; transform: scale(0.98);
             animation: iosEntry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            text-align: center;
         }
 
         h1 { 
-            font-size: 32px; font-weight: 700; margin: 0 0 10px 0; 
+            font-size: 30px; font-weight: 700; margin: 0 0 12px 0; 
             letter-spacing: -1px; color: #000;
-            text-shadow: 0 0 20px white;
+            text-shadow: 0 0 20px white, 0 0 10px white;
         }
         
         .content { 
-            font-size: 16px; line-height: 1.45; color: #000; 
+            font-size: 15.5px; line-height: 1.4; color: #000; 
             text-align: justify; margin-bottom: 25px; font-weight: 500;
             letter-spacing: -0.2px;
-            text-shadow: 0 0 20px white, 0 0 10px white;
+            text-shadow: 0 0 20px white, 0 0 10px white, 0 0 5px white;
+            /* Scroll-ыг бүрэн хаасан */
+            overflow: hidden; 
+            display: block;
         }
 
         .question { 
-            display: block; font-size: 18px; font-weight: 600; 
+            display: block; font-size: 17px; font-weight: 700; 
             margin-bottom: 30px; color: var(--ios-red); text-align: center;
         }
 
@@ -82,7 +87,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
 
-        /* iOS System Alert Modal */
+        /* iOS Alert Modal */
         #modalOverlay {
             display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background-color: rgba(0, 0, 0, 0.25);
@@ -98,8 +103,8 @@
         }
 
         .modal-text { 
-            font-size: 17px; font-weight: 600; padding: 20px 16px; 
-            color: #000; line-height: 1.3; text-align: center;
+            font-size: 17px; font-weight: 600; padding: 22px 16px; 
+            color: #000; line-height: 1.3;
         }
         
         .modal-button {
@@ -116,11 +121,11 @@
 <body oncontextmenu="return false;">
 
     <div class="photo-scatter-container">
-        <img class="scatter-img" style="top: -2%; left: -5%; width: 190px; height: 190px; transform: rotate(-8deg);" src="1.jpg">
-        <img class="scatter-img" style="top: 8%; right: -5%; width: 150px; height: 150px; transform: rotate(12deg);" src="2.jpg">
-        <img class="scatter-img" style="bottom: 15%; left: -10%; width: 185px; height: 185px; transform: rotate(10deg);" src="3.jpg">
-        <img class="scatter-img" style="bottom: -5%; right: -5%; width: 210px; height: 210px; transform: rotate(-5deg);" src="4.jpg">
-        <img class="scatter-img" style="top: 42%; left: 38%; width: 125px; height: 125px; transform: rotate(6deg);" src="5.jpg">
+        <img class="scatter-img" style="top: -3%; left: -5%; width: 180px; height: 180px; transform: rotate(-8deg);" src="1.jpg">
+        <img class="scatter-img" style="top: 10%; right: -5%; width: 140px; height: 140px; transform: rotate(12deg);" src="2.jpg">
+        <img class="scatter-img" style="bottom: 12%; left: -10%; width: 175px; height: 175px; transform: rotate(10deg);" src="3.jpg">
+        <img class="scatter-img" style="bottom: -5%; right: -5%; width: 200px; height: 200px; transform: rotate(-5deg);" src="4.jpg">
+        <img class="scatter-img" style="top: 45%; left: 40%; width: 120px; height: 120px; transform: rotate(6deg);" src="5.jpg">
     </div>
 
     <div class="wrapper">
@@ -136,12 +141,13 @@
 
     <div id="modalOverlay">
         <div class="modal-content">
-            <div class="modal-text">Энхжин, чи зөвшөөрч байна уу? ❤️</div>
+            <div class="modal-text">Энхжин, чи зөвшөөрч байна уу? </div>
             <button class="modal-button" onclick="goToInstagram()">Тийм ээ</button>
         </div>
     </div>
 
     <script>
+        // Түгжих логик
         function forceLock() { history.pushState(null, null, location.href); }
         window.onload = forceLock;
         window.onpopstate = function() { forceLock(); showModal(); };
@@ -153,7 +159,7 @@
             window.location.href = "https://ig.me/m/numurhui";
         }
 
-        // Дэлгэцийн scroll-ыг бүрэн хаах
+        // Дэлгэцийн бүх хөдөлгөөнийг Instagram хөтөч дээр бүрэн хаах
         document.addEventListener('touchmove', function(e) {
             e.preventDefault();
         }, { passive: false });
