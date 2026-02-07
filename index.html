@@ -14,7 +14,7 @@
 
         * {
             -webkit-user-select: none; user-select: none;
-            box-sizing: border-box; touch-action: none; 
+            box-sizing: border-box; 
         }
 
         html, body {
@@ -31,6 +31,7 @@
             opacity: 0; pointer-events: none;
         }
 
+        /* Зургийн ерөнхий загвар */
         .photo-scatter-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1;
@@ -39,25 +40,48 @@
         .scatter-img {
             position: absolute; object-fit: cover; 
             border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            transition: all 0.3s ease;
+        }
+
+        /* --- ГАР УТАСНЫ БАЙРЛАЛ (Mobile) --- */
+        @media (max-width: 768px) {
+            .scatter-img-1 { top: -5%; left: -10%; width: 220px; height: 220px; transform: rotate(-8deg); }
+            .scatter-img-2 { top: 5%; right: -12%; width: 180px; height: 180px; transform: rotate(12deg); }
+            .scatter-img-3 { bottom: 10%; left: -15%; width: 200px; height: 200px; transform: rotate(10deg); }
+            .scatter-img-4 { bottom: -5%; right: -8%; width: 220px; height: 220px; transform: rotate(-5deg); }
+            .scatter-img-5 { top: 45%; left: 45%; width: 120px; height: 120px; transform: rotate(5deg); opacity: 0.8; }
+        }
+
+        /* --- NOTEBOOK БАЙРЛАЛ (Desktop) --- */
+        @media (min-width: 769px) {
+            .scatter-img-1 { top: 5%; left: 5%; width: 280px; height: 280px; transform: rotate(-5deg); }
+            .scatter-img-2 { top: 5%; right: 5%; width: 260px; height: 260px; transform: rotate(8deg); }
+            .scatter-img-3 { bottom: 5%; left: 5%; width: 270px; height: 270px; transform: rotate(-10deg); }
+            .scatter-img-4 { bottom: 5%; right: 5%; width: 300px; height: 300px; transform: rotate(5deg); }
+            .scatter-img-5 { top: 50%; left: 10%; width: 180px; height: 180px; transform: rotate(15deg); opacity: 0.9; }
         }
 
         .wrapper {
             position: relative; z-index: 10;
-            width: 90%; max-width: 340px; padding: 15px;
+            width: 90%; max-width: 380px; padding: 25px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            border-radius: 30px;
             opacity: 0; transform: scale(0.98);
             animation: iosEntry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            text-align: center;
         }
 
-        h1 { font-size: 28px; font-weight: 700; margin-bottom: 10px; color: #000; text-shadow: 0 0 20px white; }
-        .content { font-size: 14.2px; line-height: 1.45; color: #000; text-align: justify; margin-bottom: 20px; font-weight: 500; text-shadow: 0 0 20px white; }
-        .question { display: block; font-size: 16.5px; font-weight: 700; margin-bottom: 25px; color: var(--ios-red); text-align: center; }
+        h1 { font-size: 30px; font-weight: 700; margin-bottom: 12px; color: #000; }
+        .content { font-size: 15px; line-height: 1.5; color: #000; text-align: justify; margin-bottom: 25px; font-weight: 500; }
+        .question { display: block; font-size: 17.5px; font-weight: 700; margin-bottom: 30px; color: var(--ios-red); }
 
         .action-button {
             display: block; background-color: #000; color: #ffffff;
-            text-align: center; padding: 16px; border-radius: 14px;
-            font-size: 16px; font-weight: 600; width: 100%; border: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            padding: 18px; border-radius: 16px; font-size: 17px; font-weight: 600;
+            width: 100%; border: none; cursor: pointer; transition: transform 0.2s;
         }
+        .action-button:hover { transform: scale(1.02); }
 
         #modalOverlay {
             display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -65,7 +89,7 @@
             z-index: 1000000; justify-content: center; align-items: center;
         }
 
-        .modal-content { background-color: rgba(255, 255, 255, 0.95); width: 270px; border-radius: 14px; overflow: hidden; animation: iosAlertPop 0.3s cubic-bezier(0.2, 1, 0.2, 1); }
+        .modal-content { background-color: rgba(255, 255, 255, 0.95); width: 270px; border-radius: 14px; overflow: hidden; animation: iosAlertPop 0.3s ease; }
         .modal-text { font-size: 17px; font-weight: 600; padding: 22px 16px; text-align: center; color: #000; }
         .modal-button { display: block; width: 100%; padding: 14px 0; border-top: 0.5px solid rgba(0, 0, 0, 0.1); color: var(--ios-blue); font-size: 17px; font-weight: 600; background: none; border: none; cursor: pointer; }
 
@@ -78,11 +102,11 @@
     <div id="youtube-player"></div>
 
     <div class="photo-scatter-container">
-        <img class="scatter-img" style="top: -5%; left: -10%; width: 250px; height: 250px; transform: rotate(-8deg);" src="1.jpg">
-        <img class="scatter-img" style="top: 10%; right: -12%; width: 220px; height: 220px; transform: rotate(12deg);" src="2.jpg">
-        <img class="scatter-img" style="bottom: 12%; left: -15%; width: 230px; height: 230px; transform: rotate(10deg);" src="3.jpg">
-        <img class="scatter-img" style="bottom: -8%; right: -8%; width: 250px; height: 250px; transform: rotate(-5deg);" src="4.jpg">
-        <img class="scatter-img" style="top: 45%; left: 45%; width: 140px; height: 140px; transform: rotate(5deg); opacity: 0.8;" src="5.jpg">
+        <img class="scatter-img scatter-img-1" src="1.jpg">
+        <img class="scatter-img scatter-img-2" src="2.jpg">
+        <img class="scatter-img scatter-img-3" src="3.jpg">
+        <img class="scatter-img scatter-img-4" src="4.jpg">
+        <img class="scatter-img scatter-img-5" src="5.jpg">
     </div>
 
     <div class="wrapper">
@@ -90,17 +114,17 @@
         <div class="content">
             Чамайг анх хараад би өөрийн эрхгүй анхаарлаа салгаж чадалгүй зогссон тэгээд чиний хоолойг сонсоод яагаад ингэж сэтгэлд минь хүрээд байгааг мэдэхийг хүссэн. Тэр үед чи инээхдээ их хөөрхөн харагдсан тэрнээс хойш чиний инээмсэглэл их дур булаам болохоор холоос ч харахад надад сайхан мэдрэмж өгдөг. 
             <br><br>
-            Бид саяхан л танилцсан ч чамтай хамт байхад надад тайван санагддаг. Би их дуугүй, мэдрэмжээ амархан илэрхийлж чаддаггүй хүн. Гэхдээ тэглээ гээд зүгээр суугаад чамайг алдаад харамсаж чадахгүй болохоор энэ захиаг бичиж байна. 
+            Бид саяхан л танилцсан ч чамтай хамт байхад надад тайван санагддаг. Би их дуугүй, мэдрэмжээ амархан илэрхийлж чаддаггүй хүн. Гэхдээ тэглээ гээд зүгээр суугаад чамайг алдвал харамсаж чадахгүй болохоор энэ захиаг бичиж байна. 
             <br><br>
-            Магадгүй чи өөр хүнд эсвэл өөр хүнтэй байж болохыг ойлгож байгаа тэгсэн ч гэсэн би чамд татагдаж, чамайг илүү таньж мэдэхийг хүсэж байна.
+            Магадгүй чи өөр хүнд эсвэл өөр хүнтэй байж болохыг ойлгож байгаа ч зүгээр л би чамд татагдаж, чамайг илүү таньж мэдэхийг хүсэж байгаагаа шударгаар хэлэхийг хүссэн юм.
         </div>
-        <span class="question">Чи миний Valentine болооч ♡</span>
+        <span class="question">Чи миний Valentine болооч? ❤️</span>
         <button onclick="showModal()" class="action-button">Хариу бичих</button>
     </div>
 
     <div id="modalOverlay">
         <div class="modal-content">
-            <div class="modal-text">Энхжин, чи зөвшөөрч байна уу? ♡</div>
+            <div class="modal-text">Энхжин, чи зөвшөөрч байна уу? ❤️</div>
             <button class="modal-button" onclick="goToInstagram()">Тийм ээ</button>
         </div>
     </div>
@@ -114,14 +138,7 @@
             player = new YT.Player('youtube-player', {
                 height: '0', width: '0',
                 videoId: '-7AfRAU69d8',
-                playerVars: { 
-                    'start': 15,
-                    'autoplay': 1, 
-                    'mute': 1, // Анх ачаалахад mute хийх нь илүү хурдан бэлэн болгодог
-                    'controls': 0,
-                    'modestbranding': 1,
-                    'playlist': '-7AfRAU69d8'
-                },
+                playerVars: { 'start': 15, 'autoplay': 1, 'mute': 1, 'controls': 0, 'modestbranding': 1, 'playlist': '-7AfRAU69d8' },
                 events: { 'onReady': onPlayerReady }
             });
         }
@@ -129,30 +146,23 @@
         function onPlayerReady(event) {
             player.setVolume(30);
             player.unMute();
-            player.pauseVideo(); // Бэлэн болгоод зогсооно
+            player.pauseVideo();
             isReady = true;
         }
 
-        // Дэлгэцийн хаана ч хүрэхэд
         function handleInteraction() {
-            if (isReady && player) {
-                player.playVideo();
-            }
+            if (isReady && player) { player.playVideo(); }
         }
 
         document.body.addEventListener('touchstart', handleInteraction, { once: true });
-        document.body.addEventListener('click', handleInteraction, { once: true });
+        document.body.addEventListener('mousedown', handleInteraction, { once: true });
 
         function showModal() { 
             handleInteraction();
             document.getElementById('modalOverlay').style.display = 'flex'; 
         }
 
-        function goToInstagram() {
-            window.location.href = "https://ig.me/m/numurhui";
-        }
-
-        document.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
+        function goToInstagram() { window.location.href = "https://ig.me/m/numurhui"; }
     </script>
 </body>
 </html>
