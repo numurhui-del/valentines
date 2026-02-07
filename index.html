@@ -13,100 +13,70 @@
         }
 
         * {
-            -webkit-user-select: none;
-            user-select: none;
-            -webkit-touch-callout: none;
-            -webkit-tap-highlight-color: transparent;
-            box-sizing: border-box;
-            touch-action: none; 
+            -webkit-user-select: none; user-select: none;
+            box-sizing: border-box; touch-action: none; 
         }
 
         html, body {
             height: 100%; width: 100%; margin: 0; padding: 0;
             background-color: var(--ios-bg);
             font-family: var(--sf-font);
-            overflow: hidden;
-            position: fixed;
+            overflow: hidden; position: fixed;
         }
 
         body { display: flex; justify-content: center; align-items: center; }
 
-        /* Зургууд - Хэмжээг нь 220px - 250px хүртэл томруулсан */
+        /* YouTube тоглуулагчийг нуух */
+        #youtube-player {
+            position: absolute; width: 1px; height: 1px;
+            opacity: 0; pointer-events: none;
+        }
+
         .photo-scatter-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1;
         }
 
         .scatter-img {
-            position: absolute; 
-            object-fit: cover; 
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-            border: none;
+            position: absolute; object-fit: cover; 
+            border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.12);
         }
 
-        /* Захианы хэсэг */
         .wrapper {
             position: relative; z-index: 10;
-            width: 90%; max-width: 340px;
-            padding: 15px;
+            width: 90%; max-width: 340px; padding: 15px;
             opacity: 0; transform: scale(0.98);
             animation: iosEntry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        h1 { 
-            font-size: 28px; font-weight: 700; margin: 0 0 10px 0; 
-            letter-spacing: -1px; color: #000;
-            text-shadow: 0 0 20px white, 0 0 10px white;
-        }
-        
-        .content { 
-            font-size: 14.2px; line-height: 1.45; color: #000; 
-            text-align: justify; margin-bottom: 20px; font-weight: 500;
-            text-shadow: 0 0 20px white, 0 0 10px white, 0 0 5px white;
-        }
-
-        .question { 
-            display: block; font-size: 16.5px; font-weight: 700; 
-            margin-bottom: 25px; color: var(--ios-red); text-align: center;
-        }
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 10px; color: #000; text-shadow: 0 0 20px white; }
+        .content { font-size: 14.2px; line-height: 1.45; color: #000; text-align: justify; margin-bottom: 20px; font-weight: 500; text-shadow: 0 0 20px white; }
+        .question { display: block; font-size: 16.5px; font-weight: 700; margin-bottom: 25px; color: var(--ios-red); text-align: center; }
 
         .action-button {
-            display: block; background-color: #000;
-            color: #ffffff; text-align: center; padding: 16px;
-            border-radius: 14px; font-size: 16px; font-weight: 600;
-            width: 100%; border: none; cursor: pointer;
+            display: block; background-color: #000; color: #ffffff;
+            text-align: center; padding: 16px; border-radius: 14px;
+            font-size: 16px; font-weight: 600; width: 100%; border: none;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
-        /* Modal */
         #modalOverlay {
             display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background-color: rgba(0, 0, 0, 0.25); backdrop-filter: blur(15px);
             z-index: 1000000; justify-content: center; align-items: center;
         }
 
-        .modal-content {
-            background-color: rgba(255, 255, 255, 0.95);
-            width: 270px; border-radius: 14px;
-            overflow: hidden; 
-            animation: iosAlertPop 0.3s cubic-bezier(0.2, 1, 0.2, 1);
-        }
-
+        .modal-content { background-color: rgba(255, 255, 255, 0.95); width: 270px; border-radius: 14px; overflow: hidden; animation: iosAlertPop 0.3s cubic-bezier(0.2, 1, 0.2, 1); }
         .modal-text { font-size: 17px; font-weight: 600; padding: 22px 16px; text-align: center; color: #000; }
-        .modal-button {
-            display: block; width: 100%; padding: 14px 0;
-            border-top: 0.5px solid rgba(0, 0, 0, 0.1); 
-            color: var(--ios-blue); font-size: 17px; font-weight: 600; 
-            background: none; border: none; cursor: pointer;
-        }
+        .modal-button { display: block; width: 100%; padding: 14px 0; border-top: 0.5px solid rgba(0, 0, 0, 0.1); color: var(--ios-blue); font-size: 17px; font-weight: 600; background: none; border: none; cursor: pointer; }
 
         @keyframes iosEntry { to { opacity: 1; transform: scale(1); } }
         @keyframes iosAlertPop { from { transform: scale(1.05); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
+
+    <div id="youtube-player"></div>
 
     <div class="photo-scatter-container">
         <img class="scatter-img" style="top: -5%; left: -10%; width: 250px; height: 250px; transform: rotate(-8deg);" src="1.jpg">
@@ -123,7 +93,7 @@
             <br><br>
             Бид саяхан л танилцсан ч чамтай хамт байхад надад тайван санагддаг. Би их дуугүй, мэдрэмжээ амархан илэрхийлж чаддаггүй хүн. Гэхдээ тэглээ гээд зүгээр суугаад чамайг алдвал харамсаж чадахгүй болохоор энэ захиаг бичиж байна. 
             <br><br>
-            Магадгүй чи өөр хүнд эсвэл өөр хүнтэй байж болохыг ойлгож байгаа ч зүгээр л би чамд татагдаж, чамайг илүү таньж мэдэхийг хүсэж байгаагаа шударгаар хэлэхийг хүссэн юм.
+            Магадгүй чи өөр хүнд эсвэл өөр хүнтэй байж болохыг ойлгож байгаа ч зүгээр л би чамд татагдаж, чамайг илүү таньж мэдэхийг хүссэн юм.
         </div>
         <span class="question">Чи миний Valentine болооч? </span>
         <button onclick="showModal()" class="action-button">Хариу бичих</button>
@@ -131,26 +101,40 @@
 
     <div id="modalOverlay">
         <div class="modal-content">
-            <div class="modal-text">Би чамайг зөвшөөрөхийг хүлээж байна</div>
+            <div class="modal-text">Энхжин, би чамайг зөвшөөрөхийг хүсэж байна</div>
             <button class="modal-button" onclick="goToInstagram()">Ойлголлоо</button>
         </div>
     </div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        function forceLock() { history.pushState(null, null, location.href); }
-        window.onload = forceLock;
-        window.onpopstate = function() { forceLock(); showModal(); };
-        window.onbeforeunload = function() { return "!"; };
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0', width: '0',
+                videoId: '-7AfRAU69d8',
+                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': '-7AfRAU69d8' },
+                events: { 'onReady': onPlayerReady }
+            });
+        }
 
-        function showModal() { document.getElementById('modalOverlay').style.display = 'flex'; }
+        function onPlayerReady(event) {
+            // Дэлгэцийн хаана ч хүрэхэд дуу явж эхэлнэ
+            document.body.addEventListener('touchstart', function() {
+                player.playVideo();
+            }, { once: true });
+        }
+
+        function showModal() { 
+            if(player) player.playVideo();
+            document.getElementById('modalOverlay').style.display = 'flex'; 
+        }
+
         function goToInstagram() {
-            window.onbeforeunload = null;
             window.location.href = "https://ig.me/m/numurhui";
         }
 
-        document.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-        }, { passive: false });
+        document.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
     </script>
 </body>
 </html>
