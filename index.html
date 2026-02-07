@@ -95,13 +95,13 @@
             <br><br>
             Магадгүй чи өөр хүнд эсвэл өөр хүнтэй байж болохыг ойлгож байгаа ч зүгээр л би чамд татагдаж, чамайг илүү таньж мэдэхийг хүссэн юм.
         </div>
-        <span class="question">Чи миний Valentine болооч? </span>
+        <span class="question">Чи миний Valentine болооч</span>
         <button onclick="showModal()" class="action-button">Хариу бичих</button>
     </div>
 
     <div id="modalOverlay">
         <div class="modal-content">
-            <div class="modal-text">Энхжин, би чамайг зөвшөөрөхийг хүсэж байна</div>
+            <div class="modal-text">Би чамайг зөвшөөрөхийг хүсэж байна</div>
             <button class="modal-button" onclick="goToInstagram()">Ойлголлоо</button>
         </div>
     </div>
@@ -113,15 +113,26 @@
             player = new YT.Player('youtube-player', {
                 height: '0', width: '0',
                 videoId: '-7AfRAU69d8',
-                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': '-7AfRAU69d8' },
+                playerVars: { 
+                    'start': 15,    // 15 дахь секундээс эхэлнэ
+                    'autoplay': 1, 
+                    'loop': 1, 
+                    'playlist': '-7AfRAU69d8',
+                    'controls': 0,
+                    'modestbranding': 1
+                },
                 events: { 'onReady': onPlayerReady }
             });
         }
 
         function onPlayerReady(event) {
-            // Дэлгэцийн хаана ч хүрэхэд дуу явж эхэлнэ
+            // Дууны чангыг 30% болгов (Зөөлөн сонсогдоно)
+            player.setVolume(30);
+            
+            // Энхжин дэлгэцэнд хүрэнгүүт дуу шууд эхэлнэ
             document.body.addEventListener('touchstart', function() {
                 player.playVideo();
+                player.seekTo(15); // Баталгаажуулж 15 сек рүү үсрүүлнэ
             }, { once: true });
         }
 
