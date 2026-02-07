@@ -12,86 +12,76 @@
             --ios-red: #ff3b30;
         }
 
-        /* Текст хуулах, сонгохыг хаах */
         * {
             -webkit-user-select: none;
             user-select: none;
             -webkit-touch-callout: none;
             -webkit-tap-highlight-color: transparent;
             box-sizing: border-box;
+            touch-action: none; /* Дэлгэц хөдлөхийг бүрэн хаана */
         }
 
         html, body {
-            margin: 0; padding: 0;
+            height: 100%; width: 100%; margin: 0; padding: 0;
             background-color: var(--ios-bg);
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            /* Scroll-ыг зөвшөөрнө */
-            overflow-x: hidden;
-            overflow-y: auto;
-            -webkit-text-size-adjust: 100%;
+            overflow: hidden; /* Дэлгэц дээш доош гүйхгүй */
+            position: fixed;
         }
 
-        /* Төв контейнер - Текст болон зураг хамт байрлах газар */
-        .main-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-            /* Дээш доош гүйлгэх хангалттай зай гаргах */
-            padding: 80px 20px 120px 20px;
-            min-height: 110vh; 
-        }
+        body { display: flex; justify-content: center; align-items: center; }
 
-        /* Зургуудыг байрлуулах (Тексттэйгээ цуг хөдөлнө) */
-        .photo-layer {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; /* Текстийн ард */
-            pointer-events: none;
+        /* Зургууд байрандаа (Fixed) */
+        .photo-scatter-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; overflow: hidden;
         }
 
         .scatter-img {
-            position: absolute;
-            width: 110px; height: 110px;
+            position: absolute; width: 110px; height: 110px;
             object-fit: cover; border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             border: 4px solid white;
         }
 
-        /* ЗАХИА - ТЕКСТ ХЭСЭГ */
+        /* Захиа байрандаа (Fixed) */
         .wrapper {
-            position: relative;
-            z-index: 10; /* Зургуудын дээр */
-            width: 100%;
-            opacity: 0;
-            transform: translateY(20px);
+            position: relative; z-index: 10;
+            width: 88%; max-width: 320px;
+            max-height: 85vh; /* Дэлгэцэнд багтах хэмжээ */
+            padding: 20px;
+            opacity: 0; transform: translateY(15px);
             animation: fadeInUp 0.8s ease forwards;
+            display: flex; flex-direction: column;
         }
 
         h1 { 
-            font-size: 28px; font-weight: 800; margin-bottom: 20px;
-            text-shadow: 0 0 15px white, 0 0 10px white;
-            color: #000;
+            font-size: 26px; font-weight: 800; margin: 0 0 15px 0; 
+            color: #000; text-shadow: 0 0 12px white, 0 0 8px white;
         }
         
+        /* Хэрэв бичиг урт болвол зөвхөн энэ хэсэг дотроо scroll хийнэ */
         .content { 
-            font-size: 15px; line-height: 1.6; color: #000; 
-            text-align: justify; margin-bottom: 30px; font-weight: 600;
-            text-shadow: 0 0 15px white, 0 0 10px white, 0 0 5px white;
+            font-size: 14.5px; line-height: 1.6; color: #000; 
+            text-align: justify; margin-bottom: 20px; font-weight: 600;
+            text-shadow: 0 0 12px white, 0 0 8px white, 0 0 4px white;
+            overflow-y: auto; touch-action: pan-y; /* Зөвхөн текст уншихад scroll зөвшөөрнө */
+            padding-right: 5px;
         }
 
         .question { 
-            display: block; font-size: 17px; font-weight: 800; 
-            margin-bottom: 30px; color: var(--ios-red); text-align: center;
+            display: block; font-size: 16px; font-weight: 800; 
+            margin-bottom: 20px; color: var(--ios-red); text-align: center;
             text-shadow: 0 0 10px white;
         }
 
         .action-button {
             display: block; background-color: #000;
-            color: #ffffff; text-align: center; padding: 16px;
-            border-radius: 14px; font-size: 16px; font-weight: 700;
+            color: #ffffff; text-align: center; padding: 15px;
+            border-radius: 14px; font-size: 15px; font-weight: 700;
             width: 100%; border: none; cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            flex-shrink: 0;
         }
 
         /* Modal Lockdown */
@@ -120,27 +110,25 @@
 </head>
 <body oncontextmenu="return false;">
 
-    <div class="main-container">
-        <div class="photo-layer">
-            <img class="scatter-img" style="top: 2%; left: -10px; transform: rotate(-10deg);" src="1.jpg">
-            <img class="scatter-img" style="top: 12%; right: -10px; transform: rotate(15deg);" src="2.jpg">
-            <img class="scatter-img" style="top: 35%; left: 35%; transform: rotate(5deg); width: 100px; height: 100px;" src="3.jpg">
-            <img class="scatter-img" style="bottom: 25%; left: -15px; transform: rotate(10deg);" src="4.jpg">
-            <img class="scatter-img" style="bottom: 5%; right: -5px; transform: rotate(-12deg);" src="5.jpg">
-        </div>
+    <div class="photo-scatter-container">
+        <img class="scatter-img" style="top: 5%; left: 5%; transform: rotate(-10deg);" src="1.jpg">
+        <img class="scatter-img" style="top: 15%; right: 5%; transform: rotate(15deg);" src="2.jpg">
+        <img class="scatter-img" style="bottom: 18%; left: -10px; transform: rotate(12deg);" src="3.jpg">
+        <img class="scatter-img" style="bottom: 8%; right: 5%; transform: rotate(-8deg);" src="4.jpg">
+        <img class="scatter-img" style="top: 42%; left: 38%; transform: rotate(5deg); width: 100px; height: 100px;" src="5.jpg">
+    </div>
 
-        <div class="wrapper">
-            <h1>Сайн уу?</h1>
-            <div class="content">
-                Чамайг анх хараад би өөрийн эрхгүй анхаарлаа салгаж чадалгүй зогсоод чиний хоолойг сонсоод яагаад ингэж сэтгэлд минь хүрээд байгааг ойлгохыг хүссэн. Тэр үед чи инээхдээ их хөөрхөн харагдсан тэрнээс хойш чиний инээмсэглэл их дур булаам болохоор холоос ч харахад надад сайхан мэдрэмж төрдөг. 
-                <br><br>
-                Бид саяхан л танилцсан ч чамтай байхад надад тайван, дахиад жоохон хамт байхыг хүсдэг болчихсон байна. Би их дуугүй, мэдрэмжээ амархан илэрхийлж чаддаггүй хүн. Гэхдээ өөрийгөө нээх хэрэгтэй гэдгээ ойлгосон болохоор энэ захиаг бичиж байна. 
-                <br><br>
-                Магадгүй чамд өөр хүн байж ч болохыг ойлгож байна гэхдээ би чамд татагдаж, чамайг илүү мэдэхийг хүсэж байгаагаа шударгаар хэлэхийг хүссэн юм.
-            </div>
-            <span class="question">Чи миний Valentine болох уу?</span>
-            <button onclick="showModal()" class="action-button">Хариу бичих</button>
+    <div class="wrapper">
+        <h1>Сайн уу?</h1>
+        <div class="content">
+            Чамайг анх хараад би өөрийн эрхгүй анхаарлаа салгаж чадалгүй зогсоод чиний хоолойг сонсоод яагаад ингэж сэтгэлд минь хүрээд байгааг ойлгохыг хүссэн. Тэр үед чи инээхдээ их хөөрхөн харагдсан тэрнээс хойш чиний инээмсэглэл их дур булаам болохоор холоос ч харахад надад сайхан мэдрэмж төрдөг. 
+            <br><br>
+            Бид саяхан л танилцсан ч чамтай байхад надад тайван, дахиад жоохон хамт байхыг хүсдэг болчихсон байна. Би их дуугүй, мэдрэмжээ амархан илэрхийлж чаддаггүй хүн. Гэхдээ өөрийгөө нээх хэрэгтэй гэдгээ ойлгосон болохоор энэ захиаг бичиж байна. 
+            <br><br>
+            Магадгүй чамд өөр хүн байж ч болохыг ойлгож байна гэхдээ би чамд татагдаж, чамайг илүү мэдэхийг хүсэж байгаагаа шударгаар хэлэхийг хүссэн юм.
         </div>
+        <span class="question">Чи миний Valentine болох уу?</span>
+        <button onclick="showModal()" class="action-button">Хариу бичих</button>
     </div>
 
     <div id="modalOverlay">
@@ -162,9 +150,11 @@
             window.location.href = "https://ig.me/m/numurhui";
         }
 
-        // Instagram Browser-т зориулсан scroll тохиргоо
-        document.addEventListener('touchstart', function(e) {
-            if (e.touches.length > 1) e.preventDefault();
+        // Бүх дэлгэцийн scroll-ыг хаах боловч текстийг гүйлгэхийг зөвшөөрөх
+        document.addEventListener('touchmove', function(e) {
+            if (!e.target.closest('.content')) {
+                e.preventDefault();
+            }
         }, { passive: false });
     </script>
 </body>
