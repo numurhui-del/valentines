@@ -14,74 +14,67 @@
 
         * {
             -webkit-user-select: none; user-select: none;
-            box-sizing: border-box; 
+            box-sizing: border-box; margin: 0; padding: 0;
         }
 
         html, body {
-            height: 100%; width: 100%; margin: 0; padding: 0;
+            height: 100%; width: 100%;
             background-color: var(--ios-bg);
             font-family: var(--sf-font);
             overflow: hidden; position: fixed;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        body { display: flex; justify-content: center; align-items: center; }
+        #youtube-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
-        #youtube-player {
-            position: absolute; width: 1px; height: 1px;
-            opacity: 0; pointer-events: none;
-        }
-
-        /* Зургийн ерөнхий загвар */
+        /* Зургийн контейнер */
         .photo-scatter-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1;
+            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 1; pointer-events: none;
         }
 
         .scatter-img {
             position: absolute; object-fit: cover; 
-            border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-            transition: all 0.3s ease;
+            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: none;
         }
 
-        /* --- ГАР УТАСНЫ БАЙРЛАЛ (Mobile) --- */
-        @media (max-width: 768px) {
-            .scatter-img-1 { top: -5%; left: -10%; width: 220px; height: 220px; transform: rotate(-8deg); }
-            .scatter-img-2 { top: 5%; right: -12%; width: 180px; height: 180px; transform: rotate(12deg); }
-            .scatter-img-3 { bottom: 10%; left: -15%; width: 200px; height: 200px; transform: rotate(10deg); }
-            .scatter-img-4 { bottom: -5%; right: -8%; width: 220px; height: 220px; transform: rotate(-5deg); }
-            .scatter-img-5 { top: 45%; left: 45%; width: 120px; height: 120px; transform: rotate(5deg); opacity: 0.8; }
-        }
+        /* 4 Булангийн байрлал (vw, vh ашиглан бүх дэлгэцэд ижил харагдуулна) */
+        .img-1 { top: 5vh; left: 5vw; width: 22vw; max-width: 280px; height: auto; aspect-ratio: 1/1; transform: rotate(-8deg); }
+        .img-3 { top: 5vh; right: 5vw; width: 20vw; max-width: 250px; height: auto; aspect-ratio: 1/1; transform: rotate(10deg); } /* 3-ыг баруун дээд булан болгов */
+        .img-4 { bottom: 5vh; left: 5vw; width: 21vw; max-width: 260px; height: auto; aspect-ratio: 1/1; transform: rotate(-5deg); }
+        .img-5 { bottom: 5vh; right: 5vw; width: 23vw; max-width: 300px; height: auto; aspect-ratio: 1/1; transform: rotate(5deg); }
 
-        /* --- NOTEBOOK БАЙРЛАЛ (Desktop) --- */
-        @media (min-width: 769px) {
-            .scatter-img-1 { top: 5%; left: 5%; width: 280px; height: 280px; transform: rotate(-5deg); }
-            .scatter-img-2 { top: 5%; right: 5%; width: 260px; height: 260px; transform: rotate(8deg); }
-            .scatter-img-3 { bottom: 5%; left: 5%; width: 270px; height: 270px; transform: rotate(-10deg); }
-            .scatter-img-4 { bottom: 5%; right: 5%; width: 300px; height: 300px; transform: rotate(5deg); }
-            .scatter-img-5 { top: 50%; left: 10%; width: 180px; height: 180px; transform: rotate(15deg); opacity: 0.9; }
-        }
-
+        /* Захианы хэсэг */
         .wrapper {
             position: relative; z-index: 10;
-            width: 90%; max-width: 380px; padding: 25px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+            width: 85vw; max-width: 400px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border-radius: 30px;
+            text-align: center;
             opacity: 0; transform: scale(0.98);
             animation: iosEntry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
         }
 
-        h1 { font-size: 30px; font-weight: 700; margin-bottom: 12px; color: #000; }
-        .content { font-size: 15px; line-height: 1.5; color: #000; text-align: justify; margin-bottom: 25px; font-weight: 500; }
-        .question { display: block; font-size: 17.5px; font-weight: 700; margin-bottom: 30px; color: var(--ios-red); }
+        h1 { font-size: clamp(24px, 5vw, 32px); font-weight: 700; margin-bottom: 15px; color: #000; letter-spacing: -1px; }
+        .content { font-size: clamp(14px, 3.2vw, 15.5px); line-height: 1.5; color: #000; text-align: justify; margin-bottom: 25px; font-weight: 500; }
+        .question { display: block; font-size: clamp(15px, 3.5vw, 18px); font-weight: 700; margin-bottom: 30px; color: var(--ios-red); }
 
         .action-button {
             display: block; background-color: #000; color: #ffffff;
-            padding: 18px; border-radius: 16px; font-size: 17px; font-weight: 600;
-            width: 100%; border: none; cursor: pointer; transition: transform 0.2s;
+            padding: 18px; border-radius: 18px; font-size: 17px; font-weight: 600;
+            width: 100%; border: none; cursor: pointer; transition: transform 0.2s ease;
         }
-        .action-button:hover { transform: scale(1.02); }
+        .action-button:active { transform: scale(0.96); }
+
+        /* Утас дээр зургийг бүдгэрүүлж текстийг тодотгох */
+        @media (max-width: 768px) {
+            .scatter-img { opacity: 0.5; }
+            .wrapper { width: 90vw; padding: 20px; }
+        }
 
         #modalOverlay {
             display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -89,9 +82,9 @@
             z-index: 1000000; justify-content: center; align-items: center;
         }
 
-        .modal-content { background-color: rgba(255, 255, 255, 0.95); width: 270px; border-radius: 14px; overflow: hidden; animation: iosAlertPop 0.3s ease; }
+        .modal-content { background-color: rgba(255, 255, 255, 0.95); width: 280px; border-radius: 14px; overflow: hidden; animation: iosAlertPop 0.3s ease; }
         .modal-text { font-size: 17px; font-weight: 600; padding: 22px 16px; text-align: center; color: #000; }
-        .modal-button { display: block; width: 100%; padding: 14px 0; border-top: 0.5px solid rgba(0, 0, 0, 0.1); color: var(--ios-blue); font-size: 17px; font-weight: 600; background: none; border: none; cursor: pointer; }
+        .modal-button { display: block; width: 100%; padding: 15px 0; border-top: 0.5px solid rgba(0, 0, 0, 0.1); color: var(--ios-blue); font-size: 17px; font-weight: 600; background: none; border: none; cursor: pointer; }
 
         @keyframes iosEntry { to { opacity: 1; transform: scale(1); } }
         @keyframes iosAlertPop { from { transform: scale(1.05); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -102,11 +95,10 @@
     <div id="youtube-player"></div>
 
     <div class="photo-scatter-container">
-        <img class="scatter-img scatter-img-1" src="1.jpg">
-        <img class="scatter-img scatter-img-2" src="2.jpg">
-        <img class="scatter-img scatter-img-3" src="3.jpg">
-        <img class="scatter-img scatter-img-4" src="4.jpg">
-        <img class="scatter-img scatter-img-5" src="5.jpg">
+        <img class="scatter-img img-1" src="1.jpg">
+        <img class="scatter-img img-3" src="3.jpg">
+        <img class="scatter-img img-4" src="4.jpg">
+        <img class="scatter-img img-5" src="5.jpg">
     </div>
 
     <div class="wrapper">
@@ -116,7 +108,7 @@
             <br><br>
             Бид саяхан л танилцсан ч чамтай хамт байхад надад тайван санагддаг. Би их дуугүй, мэдрэмжээ амархан илэрхийлж чаддаггүй хүн. Гэхдээ тэглээ гээд зүгээр суугаад чамайг алдвал харамсаж чадахгүй болохоор энэ захиаг бичиж байна. 
             <br><br>
-            Магадгүй чи өөр хүнд эсвэл өөр хүнтэй байж болохыг ойлгож байгаа ч зүгээр л би чамд татагдаж, чамайг илүү таньж мэдэхийг хүсэж байгаагаа шударгаар хэлэхийг хүссэн юм.
+            Магадгүй чи өөр хүнд эсвэл өөр хүнтэй байж болохыг ойлгож байгаа ч зүгээр л би чамд татагдаж, чамайг илүү таньж мэдэхийг хүссэн юм.
         </div>
         <span class="question">Чи миний Valentine болооч? ❤️</span>
         <button onclick="showModal()" class="action-button">Хариу бичих</button>
@@ -163,6 +155,8 @@
         }
 
         function goToInstagram() { window.location.href = "https://ig.me/m/numurhui"; }
+
+        window.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
     </script>
 </body>
 </html>
