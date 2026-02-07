@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Захидал</title>
+    <title>Messages</title>
     <style>
         :root {
             --ios-bg: #f2f2f7;
-            --ios-label: #000000;
             --ios-blue: #007aff;
             --ios-red: #ff3b30;
+            --sf-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
         }
 
         * {
@@ -18,20 +18,20 @@
             -webkit-touch-callout: none;
             -webkit-tap-highlight-color: transparent;
             box-sizing: border-box;
-            touch-action: none;
+            touch-action: none; /* Дэлгэц хөдлөхийг бүрэн хаана */
         }
 
         html, body {
             height: 100%; width: 100%; margin: 0; padding: 0;
-            background-color: var(--ios-bg);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            background-color: #ffffff; /* iOS цэвэр цагаан дэвсгэр */
+            font-family: var(--sf-font);
             overflow: hidden;
             position: fixed;
         }
 
         body { display: flex; justify-content: center; align-items: center; }
 
-        /* Зургууд (Томруулсан, Хүрээгүй) */
+        /* Зургууд - Янз бүрийн хэмжээтэй */
         .photo-scatter-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; overflow: hidden;
@@ -39,83 +39,92 @@
 
         .scatter-img {
             position: absolute; 
-            width: 160px; height: 160px; /* Хэмжээг 110-аас 160 болгож томруулсан */
             object-fit: cover; 
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: none; /* Цагаан хүрээг авч хаяв */
+            border-radius: 20px; /* iOS маягийн илүү бөөрөнхий булан */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            border: none;
         }
 
-        /* Захиа */
+        /* Захиа - iOS Card Style */
         .wrapper {
             position: relative; z-index: 10;
-            width: 88%; max-width: 320px;
-            padding: 20px;
-            opacity: 0; transform: translateY(15px);
-            animation: fadeInUp 0.8s ease forwards;
-            display: flex; flex-direction: column;
+            width: 90%; max-width: 340px;
+            padding: 25px;
+            opacity: 0; transform: scale(0.95);
+            animation: iosEntry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
         h1 { 
-            font-size: 28px; font-weight: 800; margin: 0 0 15px 0; 
-            color: #000; text-shadow: 0 0 15px white, 0 0 10px white;
+            font-size: 34px; font-weight: 700; margin: 0 0 12px 0; 
+            letter-spacing: -1px; color: #000;
+            text-shadow: 0 0 20px white, 0 0 10px white;
         }
         
         .content { 
-            font-size: 15px; line-height: 1.6; color: #000; 
-            text-align: justify; margin-bottom: 25px; font-weight: 600;
-            text-shadow: 0 0 15px white, 0 0 10px white, 0 0 5px white;
-            overflow-y: auto; touch-action: pan-y;
-            max-height: 50vh;
+            font-size: 16px; line-height: 1.4; color: #000; 
+            text-align: justify; margin-bottom: 25px; font-weight: 500;
+            letter-spacing: -0.3px;
+            text-shadow: 0 0 20px white, 0 0 10px white;
         }
 
         .question { 
-            display: block; font-size: 17px; font-weight: 800; 
-            margin-bottom: 25px; color: var(--ios-red); text-align: center;
-            text-shadow: 0 0 12px white;
+            display: block; font-size: 18px; font-weight: 600; 
+            margin-bottom: 30px; color: var(--ios-red); text-align: center;
         }
 
+        /* iOS Style Button */
         .action-button {
             display: block; background-color: #000;
             color: #ffffff; text-align: center; padding: 16px;
-            border-radius: 14px; font-size: 16px; font-weight: 700;
+            border-radius: 14px; font-size: 17px; font-weight: 600;
             width: 100%; border: none; cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            flex-shrink: 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.1s ease;
         }
+        .action-button:active { transform: scale(0.96); }
 
-        /* Modal */
+        /* iOS Alert Modal */
         #modalOverlay {
             display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.45);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             z-index: 1000000; justify-content: center; align-items: center;
         }
 
         .modal-content {
-            background-color: white; width: 270px; border-radius: 16px;
-            overflow: hidden; animation: modalPop 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.2);
+            background-color: rgba(255, 255, 255, 0.9);
+            width: 270px; border-radius: 14px;
+            overflow: hidden; 
+            animation: iosAlertPop 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+            text-align: center;
         }
 
-        .modal-text { font-size: 16px; font-weight: 600; padding: 25px 20px; text-align: center; }
+        .modal-text { 
+            font-size: 17px; font-weight: 600; padding: 20px 16px; 
+            color: #000; line-height: 1.3;
+        }
+        
         .modal-button {
-            display: block; width: 100%; padding: 15px 0;
-            border-top: 0.5px solid #eee; color: var(--ios-blue);
-            font-size: 17px; font-weight: 700; background: none; border: none;
+            display: block; width: 100%; padding: 12px 0;
+            border-top: 0.5px solid rgba(0, 0, 0, 0.15); 
+            color: var(--ios-blue); font-size: 17px; font-weight: 600; 
+            background: none; border-left: none; border-right: none; border-bottom: none;
+            cursor: pointer;
         }
+        .modal-button:active { background-color: rgba(0, 0, 0, 0.05); }
 
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-        @keyframes modalPop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes iosEntry { to { opacity: 1; transform: scale(1); } }
+        @keyframes iosAlertPop { from { transform: scale(1.1); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
     <div class="photo-scatter-container">
-        <img class="scatter-img" style="top: -2%; left: -5%; transform: rotate(-10deg); width: 180px; height: 180px;" src="1.jpg">
-        <img class="scatter-img" style="top: 10%; right: -8%; transform: rotate(15deg); width: 170px; height: 170px;" src="2.jpg">
-        <img class="scatter-img" style="bottom: 15%; left: -10%; transform: rotate(12deg); width: 160px; height: 160px;" src="3.jpg">
-        <img class="scatter-img" style="bottom: -2%; right: -5%; transform: rotate(-8deg); width: 190px; height: 190px;" src="4.jpg">
-        <img class="scatter-img" style="top: 40%; left: 35%; transform: rotate(5deg); width: 130px; height: 130px;" src="5.jpg">
+        <img class="scatter-img" style="top: -2%; left: -5%; width: 200px; height: 200px; transform: rotate(-8deg);" src="1.jpg">
+        <img class="scatter-img" style="top: 10%; right: -5%; width: 150px; height: 150px; transform: rotate(12deg);" src="2.jpg">
+        <img class="scatter-img" style="bottom: 12%; left: -8%; width: 180px; height: 180px; transform: rotate(10deg);" src="3.jpg">
+        <img class="scatter-img" style="bottom: -2%; right: -3%; width: 190px; height: 190px; transform: rotate(-5deg);" src="4.jpg">
+        <img class="scatter-img" style="top: 45%; left: 40%; width: 130px; height: 130px; transform: rotate(4deg);" src="5.jpg">
     </div>
 
     <div class="wrapper">
@@ -123,9 +132,7 @@
         <div class="content">
             Чамайг анх хараад би өөрийн эрхгүй анхаарлаа салгаж чадалгүй зогсоод чиний хоолойг сонсоод яагаад ингэж сэтгэлд минь хүрээд байгааг ойлгохыг хүссэн. Тэр үед чи инээхдээ их хөөрхөн харагдсан тэрнээс хойш чиний инээмсэглэл их дур булаам болохоор холоос ч харахад надад сайхан мэдрэмж төрдөг. 
             <br><br>
-            Бид саяхан л танилцсан ч чамтай байхад надад тайван, дахиад жоохон хамт байхыг хүсдэг болчихсон байна. Би их дуугүй, мэдрэмжээ амархан илэрхийлж чаддаггүй хүн. Гэхдээ өөрийгөө нээх хэрэгтэй гэдгээ ойлгосон болохоор энэ захиаг бичиж байна. 
-            <br><br>
-            Магадгүй чамд өөр хүн байж ч болохыг ойлгож байна гэхдээ би чамд татагдаж, чамайг илүү мэдэхийг хүсэж байгаагаа шударгаар хэлэхийг хүссэн юм.
+            Бид саяхан л танилцсан ч чамтай байхад надад тайван, дахиад жоохон хамт байхыг хүсдэг болчихсон байна. Би их дуугүй, мэдрэмжээ амархан илэрхийлж чаддаггүй хүн. Гэхдээ өөрийгөө нээх хэрэгтэй гэдгээ ойлгосон болохоор энэ захиаг бичиж байна.
         </div>
         <span class="question">Чи миний Valentine болох уу?</span>
         <button onclick="showModal()" class="action-button">Хариу бичих</button>
@@ -133,7 +140,7 @@
 
     <div id="modalOverlay">
         <div class="modal-content">
-            <div class="modal-text">Би чиний зөвшөөрөхийг хүсэж байна...</div>
+            <div class="modal-text">Чи миний Valentine болохыг зөвшөөрч байна уу?</div>
             <button class="modal-button" onclick="goToInstagram()">Ойлголлоо</button>
         </div>
     </div>
@@ -150,10 +157,9 @@
             window.location.href = "https://ig.me/m/numurhui";
         }
 
+        // iOS scroll болон дэлгэц хөдлөхийг бүрэн хаах
         document.addEventListener('touchmove', function(e) {
-            if (!e.target.closest('.content')) {
-                e.preventDefault();
-            }
+            e.preventDefault();
         }, { passive: false });
     </script>
 </body>
