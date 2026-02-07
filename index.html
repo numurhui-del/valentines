@@ -6,7 +6,7 @@
     <title>Messages</title>
     <style>
         :root {
-            --ios-bg: #ffffff;
+            --ios-bg: #f2f2f7;
             --ios-blue: #007aff;
             --ios-red: #ff3b30;
             --sf-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
@@ -23,11 +23,11 @@
             font-family: var(--sf-font);
             overflow: hidden; position: fixed;
             display: flex; justify-content: center; align-items: center;
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
         }
 
         #youtube-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
-        
         .photo-scatter-container {
             position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 1; pointer-events: none;
@@ -35,58 +35,101 @@
 
         .scatter-img {
             position: absolute; object-fit: cover; 
-            border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: none;
+            border-radius: 12px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 4px solid #fff;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-      
+
         .img-1 { top: 5vh; left: 5vw; width: 22vw; max-width: 280px; height: auto; aspect-ratio: 1/1; transform: rotate(-8deg); }
-        .img-3 { top: 5vh; right: 5vw; width: 20vw; max-width: 250px; height: auto; aspect-ratio: 1/1; transform: rotate(10deg); } /* 3-ыг баруун дээд булан болгов */
+        .img-3 { top: 5vh; right: 5vw; width: 20vw; max-width: 250px; height: auto; aspect-ratio: 1/1; transform: rotate(10deg); }
         .img-4 { bottom: 5vh; left: 5vw; width: 21vw; max-width: 260px; height: auto; aspect-ratio: 1/1; transform: rotate(-5deg); }
         .img-5 { bottom: 5vh; right: 5vw; width: 23vw; max-width: 300px; height: auto; aspect-ratio: 1/1; transform: rotate(5deg); }
 
-      
+
         .wrapper {
             position: relative; z-index: 10;
-            width: 85vw; max-width: 400px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border-radius: 30px;
+            width: 88vw; max-width: 420px;
+            padding: 35px 25px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 35px;
             text-align: center;
-            opacity: 0; transform: scale(0.98);
-            animation: iosEntry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            opacity: 0; transform: translateY(20px);
+            animation: iosEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        h1 { font-size: clamp(24px, 5vw, 32px); font-weight: 700; margin-bottom: 15px; color: #000; letter-spacing: -1px; }
-        .content { font-size: clamp(14px, 3.2vw, 15.5px); line-height: 1.5; color: #000; text-align: justify; margin-bottom: 25px; font-weight: 500; }
-        .question { display: block; font-size: clamp(15px, 3.5vw, 18px); font-weight: 700; margin-bottom: 30px; color: var(--ios-red); }
+        h1 { 
+            font-size: clamp(26px, 6vw, 34px); 
+            font-weight: 800; margin-bottom: 18px; 
+            color: #1c1c1e; letter-spacing: -1.2px; 
+        }
+
+        .content { 
+            font-size: clamp(14px, 3.4vw, 16px); 
+            line-height: 1.6; color: #3a3a3c; 
+            text-align: justify; margin-bottom: 28px; 
+            font-weight: 400; 
+            letter-spacing: -0.2px;
+        }
+
+        .question { 
+            display: block; font-size: clamp(16px, 3.8vw, 19px); 
+            font-weight: 700; margin-bottom: 30px; 
+            color: var(--ios-red); 
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
 
         .action-button {
-            display: block; background-color: #000; color: #ffffff;
-            padding: 18px; border-radius: 18px; font-size: 17px; font-weight: 600;
-            width: 100%; border: none; cursor: pointer; transition: transform 0.2s ease;
+            display: block; background-color: #1c1c1e; color: #ffffff;
+            padding: 18px; border-radius: 20px; font-size: 17px; font-weight: 600;
+            width: 100%; border: none; cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
-        .action-button:active { transform: scale(0.96); }
+
+        .action-button:active { 
+            transform: scale(0.95);
+            background-color: #000;
+        }
 
         @media (max-width: 768px) {
-            .scatter-img { opacity: 0.5; }
-            .wrapper { width: 90vw; padding: 20px; }
+            .scatter-img { opacity: 0.65; }
+            .wrapper { width: 92vw; padding: 25px 20px; }
         }
 
         #modalOverlay {
             display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.25); backdrop-filter: blur(15px);
+            background-color: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px);
             z-index: 1000000; justify-content: center; align-items: center;
         }
 
-        .modal-content { background-color: rgba(255, 255, 255, 0.95); width: 280px; border-radius: 14px; overflow: hidden; animation: iosAlertPop 0.3s ease; }
-        .modal-text { font-size: 17px; font-weight: 600; padding: 22px 16px; text-align: center; color: #000; }
-        .modal-button { display: block; width: 100%; padding: 15px 0; border-top: 0.5px solid rgba(0, 0, 0, 0.1); color: var(--ios-blue); font-size: 17px; font-weight: 600; background: none; border: none; cursor: pointer; }
+        .modal-content { 
+            background-color: rgba(255, 255, 255, 0.98); 
+            width: 290px; border-radius: 18px; 
+            overflow: hidden; 
+            animation: iosAlertPop 0.4s cubic-bezier(0.2, 1, 0.2, 1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
 
-        @keyframes iosEntry { to { opacity: 1; transform: scale(1); } }
-        @keyframes iosAlertPop { from { transform: scale(1.05); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-text { font-size: 17px; font-weight: 600; padding: 25px 20px; text-align: center; color: #000; }
+        .modal-button { 
+            display: block; width: 100%; padding: 16px 0; 
+            border-top: 0.5px solid rgba(0, 0, 0, 0.1); 
+            color: var(--ios-blue); font-size: 18px; font-weight: 600; 
+            background: none; border: none; cursor: pointer;
+        }
+
+        @keyframes iosEntry { to { opacity: 1; transform: translateY(0); } }
+        @keyframes iosAlertPop { from { transform: scale(1.1); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
