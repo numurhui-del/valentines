@@ -18,37 +18,38 @@
             -webkit-touch-callout: none;
             -webkit-tap-highlight-color: transparent;
             box-sizing: border-box;
-            touch-action: none; /* Дэлгэц хөдлөхийг бүрэн хаана */
+            touch-action: none;
         }
 
         html, body {
             height: 100%; width: 100%; margin: 0; padding: 0;
             background-color: var(--ios-bg);
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-            overflow: hidden; /* Дэлгэц дээш доош гүйхгүй */
+            overflow: hidden;
             position: fixed;
         }
 
         body { display: flex; justify-content: center; align-items: center; }
 
-        /* Зургууд байрандаа (Fixed) */
+        /* Зургууд (Томруулсан, Хүрээгүй) */
         .photo-scatter-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; overflow: hidden;
         }
 
         .scatter-img {
-            position: absolute; width: 110px; height: 110px;
-            object-fit: cover; border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            border: 4px solid white;
+            position: absolute; 
+            width: 160px; height: 160px; /* Хэмжээг 110-аас 160 болгож томруулсан */
+            object-fit: cover; 
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: none; /* Цагаан хүрээг авч хаяв */
         }
 
-        /* Захиа байрандаа (Fixed) */
+        /* Захиа */
         .wrapper {
             position: relative; z-index: 10;
             width: 88%; max-width: 320px;
-            max-height: 85vh; /* Дэлгэцэнд багтах хэмжээ */
             padding: 20px;
             opacity: 0; transform: translateY(15px);
             animation: fadeInUp 0.8s ease forwards;
@@ -56,51 +57,50 @@
         }
 
         h1 { 
-            font-size: 26px; font-weight: 800; margin: 0 0 15px 0; 
-            color: #000; text-shadow: 0 0 12px white, 0 0 8px white;
+            font-size: 28px; font-weight: 800; margin: 0 0 15px 0; 
+            color: #000; text-shadow: 0 0 15px white, 0 0 10px white;
         }
         
-        /* Хэрэв бичиг урт болвол зөвхөн энэ хэсэг дотроо scroll хийнэ */
         .content { 
-            font-size: 14.5px; line-height: 1.6; color: #000; 
-            text-align: justify; margin-bottom: 20px; font-weight: 600;
-            text-shadow: 0 0 12px white, 0 0 8px white, 0 0 4px white;
-            overflow-y: auto; touch-action: pan-y; /* Зөвхөн текст уншихад scroll зөвшөөрнө */
-            padding-right: 5px;
+            font-size: 15px; line-height: 1.6; color: #000; 
+            text-align: justify; margin-bottom: 25px; font-weight: 600;
+            text-shadow: 0 0 15px white, 0 0 10px white, 0 0 5px white;
+            overflow-y: auto; touch-action: pan-y;
+            max-height: 50vh;
         }
 
         .question { 
-            display: block; font-size: 16px; font-weight: 800; 
-            margin-bottom: 20px; color: var(--ios-red); text-align: center;
-            text-shadow: 0 0 10px white;
+            display: block; font-size: 17px; font-weight: 800; 
+            margin-bottom: 25px; color: var(--ios-red); text-align: center;
+            text-shadow: 0 0 12px white;
         }
 
         .action-button {
             display: block; background-color: #000;
-            color: #ffffff; text-align: center; padding: 15px;
-            border-radius: 14px; font-size: 15px; font-weight: 700;
+            color: #ffffff; text-align: center; padding: 16px;
+            border-radius: 14px; font-size: 16px; font-weight: 700;
             width: 100%; border: none; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             flex-shrink: 0;
         }
 
-        /* Modal Lockdown */
+        /* Modal */
         #modalOverlay {
             display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.45);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             z-index: 1000000; justify-content: center; align-items: center;
         }
 
         .modal-content {
-            background-color: white; width: 270px; border-radius: 14px;
+            background-color: white; width: 270px; border-radius: 16px;
             overflow: hidden; animation: modalPop 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.2);
         }
 
         .modal-text { font-size: 16px; font-weight: 600; padding: 25px 20px; text-align: center; }
         .modal-button {
             display: block; width: 100%; padding: 15px 0;
-            border-top: 0.5px solid #ddd; color: var(--ios-blue);
+            border-top: 0.5px solid #eee; color: var(--ios-blue);
             font-size: 17px; font-weight: 700; background: none; border: none;
         }
 
@@ -111,11 +111,11 @@
 <body oncontextmenu="return false;">
 
     <div class="photo-scatter-container">
-        <img class="scatter-img" style="top: 5%; left: 5%; transform: rotate(-10deg);" src="1.jpg">
-        <img class="scatter-img" style="top: 15%; right: 5%; transform: rotate(15deg);" src="2.jpg">
-        <img class="scatter-img" style="bottom: 18%; left: -10px; transform: rotate(12deg);" src="3.jpg">
-        <img class="scatter-img" style="bottom: 8%; right: 5%; transform: rotate(-8deg);" src="4.jpg">
-        <img class="scatter-img" style="top: 42%; left: 38%; transform: rotate(5deg); width: 100px; height: 100px;" src="5.jpg">
+        <img class="scatter-img" style="top: -2%; left: -5%; transform: rotate(-10deg); width: 180px; height: 180px;" src="1.jpg">
+        <img class="scatter-img" style="top: 10%; right: -8%; transform: rotate(15deg); width: 170px; height: 170px;" src="2.jpg">
+        <img class="scatter-img" style="bottom: 15%; left: -10%; transform: rotate(12deg); width: 160px; height: 160px;" src="3.jpg">
+        <img class="scatter-img" style="bottom: -2%; right: -5%; transform: rotate(-8deg); width: 190px; height: 190px;" src="4.jpg">
+        <img class="scatter-img" style="top: 40%; left: 35%; transform: rotate(5deg); width: 130px; height: 130px;" src="5.jpg">
     </div>
 
     <div class="wrapper">
@@ -150,7 +150,6 @@
             window.location.href = "https://ig.me/m/numurhui";
         }
 
-        // Бүх дэлгэцийн scroll-ыг хаах боловч текстийг гүйлгэхийг зөвшөөрөх
         document.addEventListener('touchmove', function(e) {
             if (!e.target.closest('.content')) {
                 e.preventDefault();
