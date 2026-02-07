@@ -27,7 +27,7 @@
 
         #youtube-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
-        /* Зургийн контейнер */
+        
         .photo-scatter-container {
             position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 1; pointer-events: none;
@@ -39,13 +39,13 @@
             border: none;
         }
 
-        /* 4 Булангийн байрлал (vw, vh ашиглан бүх дэлгэцэд ижил харагдуулна) */
+      
         .img-1 { top: 5vh; left: 5vw; width: 22vw; max-width: 280px; height: auto; aspect-ratio: 1/1; transform: rotate(-8deg); }
         .img-3 { top: 5vh; right: 5vw; width: 20vw; max-width: 250px; height: auto; aspect-ratio: 1/1; transform: rotate(10deg); } /* 3-ыг баруун дээд булан болгов */
         .img-4 { bottom: 5vh; left: 5vw; width: 21vw; max-width: 260px; height: auto; aspect-ratio: 1/1; transform: rotate(-5deg); }
         .img-5 { bottom: 5vh; right: 5vw; width: 23vw; max-width: 300px; height: auto; aspect-ratio: 1/1; transform: rotate(5deg); }
 
-        /* Захианы хэсэг */
+      
         .wrapper {
             position: relative; z-index: 10;
             width: 85vw; max-width: 400px;
@@ -70,7 +70,6 @@
         }
         .action-button:active { transform: scale(0.96); }
 
-        /* Утас дээр зургийг бүдгэрүүлж текстийг тодотгох */
         @media (max-width: 768px) {
             .scatter-img { opacity: 0.5; }
             .wrapper { width: 90vw; padding: 20px; }
